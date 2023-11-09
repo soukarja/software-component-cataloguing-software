@@ -67,7 +67,7 @@ const AddComponent = () => {
   useEffect(() => {
     if (componentID != null) {
       fetchComponentData();
-      loaderRef.current.style.display = "unset";
+      loaderRef.current.style.display = "flex";
       formRef.current.style.display = "none";
     }
     else{
@@ -110,7 +110,7 @@ const AddComponent = () => {
   }, [programmingLanguage]);
 
   const addComponent = async () => {
-    loaderRef.current.style.display = "unset";
+    loaderRef.current.style.display = "flex";
     formRef.current.style.display = "none";
     try {
       await addDoc(collection(db, componentStorageName), {
@@ -142,7 +142,7 @@ const AddComponent = () => {
   };
 
   const editComponent = async () => {
-    loaderRef.current.style.display = "unset";
+    loaderRef.current.style.display = "flex";
     formRef.current.style.display = "none";
     try {
       await updateDoc(doc(db, componentStorageName, componentID), {

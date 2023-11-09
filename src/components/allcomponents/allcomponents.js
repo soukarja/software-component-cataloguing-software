@@ -69,7 +69,7 @@ const AllComponents = () => {
   };
 
   useEffect(() => {
-    loaderRef.current.style.display = "unset";
+    loaderRef.current.style.display = "flex";
   }, []);
 
   const deleteComponent = async (compID) => {
@@ -99,8 +99,8 @@ const AllComponents = () => {
     fetchComponents();
   }, []);
   return (
-    <div className="all-components">
-      <dotlottie-player
+    <>
+    <dotlottie-player
         ref={loaderRef}
         src="/loading_anim.json"
         background="transparent"
@@ -108,11 +108,13 @@ const AllComponents = () => {
         style={{
           width: "300px",
           height: "300px",
-          marginLeft: "100%",
+          margin: "auto",
+          display: "flex"
         }}
         loop
         autoplay
       ></dotlottie-player>
+    <div className="all-components">
       {savedComponents.map((item) => {
         return (
           <Card
@@ -127,6 +129,7 @@ const AllComponents = () => {
         );
       })}
     </div>
+    </>
   );
 };
 
