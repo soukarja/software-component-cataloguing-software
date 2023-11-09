@@ -42,7 +42,7 @@ const AddComponent = () => {
 
   const { componentID } = useParams();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (componentType == "code") {
@@ -69,8 +69,7 @@ const AddComponent = () => {
       fetchComponentData();
       loaderRef.current.style.display = "flex";
       formRef.current.style.display = "none";
-    }
-    else{
+    } else {
       loaderRef.current.style.display = "none";
       formRef.current.style.display = "grid";
     }
@@ -126,7 +125,7 @@ const AddComponent = () => {
           loaderRef.current.style.display = "none";
           formRef.current.style.display = "grid";
           alert("Data saved successfully!");
-          navigate("/dashboard")
+          navigate("/dashboard");
         })
         .catch((e) => {
           alert("Error while saving data.");
@@ -157,7 +156,7 @@ const AddComponent = () => {
           loaderRef.current.style.display = "none";
           formRef.current.style.display = "grid";
           alert("Data updated successfully!");
-          navigate("/dashboard")
+          navigate("/dashboard");
         })
         .catch((e) => {
           loaderRef.current.style.display = "none";

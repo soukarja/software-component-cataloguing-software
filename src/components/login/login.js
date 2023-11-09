@@ -40,8 +40,7 @@ const LoginPage = () => {
           e.preventDefault();
           if (username == "" || password == "") {
             alert("Please Enter a valid username and password");
-          }
-          else if (username == "admin" && password == "password") {
+          } else if (username == "admin" && password == "password") {
             navigate("/dashboard");
           } else {
             alert("Invalid Credentials");

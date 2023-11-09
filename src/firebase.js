@@ -14,10 +14,10 @@ const firebaseConfig = {
   storageBucket: "software-component-cataloguing.appspot.com",
   messagingSenderId: "508255768886",
   appId: "1:508255768886:web:b4a17f2c7ce4baefb1e397",
-  measurementId: "G-FMLG2Q1KJZ"
+  measurementId: "G-FMLG2Q1KJZ",
 };
 
-export const componentStorageName = "components"
+export const componentStorageName = "components";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

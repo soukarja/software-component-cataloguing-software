@@ -4,7 +4,12 @@ import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { componentStorageName, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
-const AllComponents = ({savedComponents, setSavedComponents, filteredSavedComponents, setFilteredSavedComponents}) => {
+const AllComponents = ({
+  savedComponents,
+  setSavedComponents,
+  filteredSavedComponents,
+  setFilteredSavedComponents,
+}) => {
   const loaderRef = useRef();
   const navigate = useNavigate();
 
@@ -97,7 +102,6 @@ const AllComponents = ({savedComponents, setSavedComponents, filteredSavedCompon
     });
   };
 
-  
   const fetchComponents = async () => {
     await getDocs(collection(db, componentStorageName)).then(
       (querySnapshot) => {
@@ -134,9 +138,9 @@ const AllComponents = ({savedComponents, setSavedComponents, filteredSavedCompon
         autoplay
       ></dotlottie-player>
       <span className="all-components-title">
-        {
-          filteredSavedComponents.length <= 0?"No Components Found": "All Components"
-        }
+        {filteredSavedComponents.length <= 0
+          ? "No Components Found"
+          : "All Components"}
       </span>
       <div className="all-components">
         {filteredSavedComponents.map((item) => {
