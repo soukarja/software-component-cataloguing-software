@@ -14,7 +14,8 @@ import { xml as lxml } from "@codemirror/lang-xml";
 import { swift as lswift } from "@codemirror/legacy-modes/mode/swift";
 import { ruby as lruby } from "@codemirror/legacy-modes/mode/ruby";
 import { rust as lrust } from "@codemirror/legacy-modes/mode/rust";
-import { render } from "@testing-library/react";
+import { collection, addDoc } from "firebase/firestore";
+import { componentStorageName, db } from "../../firebase";
 
 const AddComponent = () => {
   const [componentName, setComponentName] = useState("");
@@ -52,6 +53,26 @@ const AddComponent = () => {
       // codeBlockOptionlRef.current.classList.add("hidden")
     }
   }, [componentType]);
+
+  const addComponent = async () => {
+    try {
+      await addDoc(collection(db, componentStorageName), {
+        componentName: componentName,
+        componentType: componentType,
+        componentCategory: componentCategory,
+        programmingLanguage: programmingLanguage,
+        codeBlock: codeBlock,
+        designData: designFile
+      }).then(()=>{
+        alert("Data saved successfully!")
+      }).catch((e)=>{
+        alert("Error while saving data.")
+      })
+    } catch (e) {
+      alert("Unable to save the data. Please try again later.");
+      console.log("Error found in saving: " + e);
+    }
+  };
 
   useEffect(() => {
     switch (programmingLanguage) {
@@ -129,8 +150,7 @@ const AddComponent = () => {
         <select
           onChange={(e) => {
             setComponentcategory(e.target.value);
-          }}
-        >
+          }}>
           <option selected hidden value="none">
             Select a category
           </option>
@@ -179,22 +199,16 @@ const AddComponent = () => {
             if (e.target.files.length > 0) {
               var reader = new FileReader();
               reader.onloadend = function () {
-                //   console.log('RESULT', reader.result)
-                setDesignFile(render.result);
+                console.log('RESULT', reader.result)
+                setDesignFile(reader.result);
               };
               reader.readAsDataURL(e.target.files[0]);
             } else {
               setDesignFile(null);
             }
-            console.log(e.target.files[0]);
           }}
         />
         <label ref={codeBlockLabelRef}>Code Block</label>
-        {/* <textarea rows={10} 
-        ref={codeBlockOptionlRef}
-        onChange={(e)=>{
-            setCodeBlock(e.target.value)
-        }}>{codeBlock}</textarea> */}
         <ReactCodeMirror
           value={codeBlock}
           ref={codeBlockOptionlRef}
@@ -224,7 +238,7 @@ const AddComponent = () => {
             } else if (componentType == "design" && designFile == null) {
               alert("Please upload the design");
             } else {
-              alert("All Good!");
+              addComponent();
             }
           }}
         >

@@ -1,0 +1,47 @@
+.all-components{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.card {
+  border: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
+  cursor: pointer;
+  margin: 1rem 3rem;
+}
+
+.card .name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: auto;
+}
+
+.card img {
+  width: 250px;
+  height: 250px;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+.card .category {
+  font-size: 0.9rem;
+  color: gray;
+  text-transform: uppercase;
+}
+
+.card .pills {
+  display: flex;
+  grid-gap: 0.4rem;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.card .pills span {
+  background: rgb(69, 69, 69);
+  border-radius: 8px;
+  padding: 0.1rem 1rem;
+  color: white;
+  text-transform: capitalize;
+}

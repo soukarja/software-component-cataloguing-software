@@ -10,7 +10,7 @@ import AddComponent from './components/addcomponent/addcomponent';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <Routes>
           <Route path="/" element={<Home />}/>
@@ -19,7 +19,7 @@ root.render(
           <Route path="/add-component" element={<AddComponent />}/>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  //</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
