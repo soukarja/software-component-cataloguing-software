@@ -17,6 +17,7 @@ root.render(
           <Route path="/login" element={<LoginPage />}/>
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/add-component" element={<AddComponent />}/>
+          <Route path="/edit-component/:componentID" element={<AddComponent />}/>
       </Routes>
     </BrowserRouter>
   //</React.StrictMode>

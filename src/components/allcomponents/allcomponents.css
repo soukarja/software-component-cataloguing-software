@@ -1,6 +1,6 @@
-.all-components{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.all-components {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 .card {
   border: solid 1px black;
@@ -10,12 +10,46 @@
   padding: 2rem;
   cursor: pointer;
   margin: 1rem 3rem;
+  position: relative;
 }
 
 .card .name {
   font-size: 1.4rem;
   font-weight: bold;
   margin-top: auto;
+}
+
+.card .edit-btn,
+.card .del-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.7rem;
+  position: absolute;
+  top: 1rem;
+  opacity: 0.3;
+}
+
+.card .edit-btn:hover,
+.card .del-btn:hover {
+  opacity: 1;
+}
+
+.card .edit-btn dotlottie-player,
+.card .del-btn dotlottie-player {
+  filter: invert(1);
+}
+
+.card .edit-btn {
+  background: green;
+  left: 1rem;
+}
+
+.card .del-btn {
+  background: red;
+  right: 1rem;
 }
 
 .card img {

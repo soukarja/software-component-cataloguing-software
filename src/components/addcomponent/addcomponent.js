@@ -14,8 +14,9 @@ import { xml as lxml } from "@codemirror/lang-xml";
 import { swift as lswift } from "@codemirror/legacy-modes/mode/swift";
 import { ruby as lruby } from "@codemirror/legacy-modes/mode/ruby";
 import { rust as lrust } from "@codemirror/legacy-modes/mode/rust";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDoc, doc, updateDoc } from "firebase/firestore";
 import { componentStorageName, db } from "../../firebase";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddComponent = () => {
   const [componentName, setComponentName] = useState("");
@@ -31,8 +32,17 @@ const AddComponent = () => {
   const codeBlockLabelRef = useRef();
   const codeBlockOptionlRef = useRef();
 
+  const componentTypeRef = useRef();
+  const componentCategoryRef = useRef();
+
   const diagramLabelRef = useRef();
   const diagramOptionRef = useRef();
+  const loaderRef = useRef();
+  const formRef = useRef();
+
+  const { componentID } = useParams();
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (componentType == "code") {
@@ -54,7 +64,54 @@ const AddComponent = () => {
     }
   }, [componentType]);
 
+  useEffect(() => {
+    if (componentID != null) {
+      fetchComponentData();
+      loaderRef.current.style.display = "unset";
+      formRef.current.style.display = "none";
+    }
+    else{
+      loaderRef.current.style.display = "none";
+      formRef.current.style.display = "grid";
+    }
+  }, []);
+
+  const fetchComponentData = async () => {
+    await getDoc(doc(db, componentStorageName, componentID)).then(
+      (querySnapshot) => {
+        // const newData = querySnapshot.docs.map((doc) => ({
+        //   ...doc.data(),
+        //   id: doc.id,
+        // }));
+        const data = querySnapshot.data();
+        setComponentName(data.componentName);
+        setComponentcategory(data.componentCategory);
+        setCodeBlock(data.codeBlock);
+        setComponentType(data.componentType);
+        setProgrammingLanguage(data.programmingLanguage);
+        loaderRef.current.style.display = "none";
+        formRef.current.style.display = "grid";
+        // console.log("The Data: ", data);
+      }
+    );
+    // console.log("The Data is: ", data);
+  };
+
+  useEffect(() => {
+    componentCategoryRef.current.value = componentCategory;
+  }, [componentCategory]);
+
+  useEffect(() => {
+    componentTypeRef.current.value = componentType;
+  }, [componentType]);
+
+  useEffect(() => {
+    chooseProgLanguageOptionRef.current.value = programmingLanguage;
+  }, [programmingLanguage]);
+
   const addComponent = async () => {
+    loaderRef.current.style.display = "unset";
+    formRef.current.style.display = "none";
     try {
       await addDoc(collection(db, componentStorageName), {
         componentName: componentName,
@@ -62,15 +119,56 @@ const AddComponent = () => {
         componentCategory: componentCategory,
         programmingLanguage: programmingLanguage,
         codeBlock: codeBlock,
-        designData: designFile
-      }).then(()=>{
-        alert("Data saved successfully!")
-      }).catch((e)=>{
-        alert("Error while saving data.")
+        designData: designFile,
+        timestamp: new Date().getTime(),
       })
+        .then(() => {
+          loaderRef.current.style.display = "none";
+          formRef.current.style.display = "grid";
+          alert("Data saved successfully!");
+          navigate("/dashboard")
+        })
+        .catch((e) => {
+          alert("Error while saving data.");
+          loaderRef.current.style.display = "none";
+          formRef.current.style.display = "grid";
+        });
     } catch (e) {
       alert("Unable to save the data. Please try again later.");
       console.log("Error found in saving: " + e);
+      loaderRef.current.style.display = "none";
+      formRef.current.style.display = "grid";
+    }
+  };
+
+  const editComponent = async () => {
+    loaderRef.current.style.display = "unset";
+    formRef.current.style.display = "none";
+    try {
+      await updateDoc(doc(db, componentStorageName, componentID), {
+        componentName: componentName,
+        componentType: componentType,
+        componentCategory: componentCategory,
+        programmingLanguage: programmingLanguage,
+        codeBlock: codeBlock,
+        designData: designFile,
+      })
+        .then(() => {
+          loaderRef.current.style.display = "none";
+          formRef.current.style.display = "grid";
+          alert("Data updated successfully!");
+          navigate("/dashboard")
+        })
+        .catch((e) => {
+          loaderRef.current.style.display = "none";
+          formRef.current.style.display = "grid";
+          alert("Error while updating data.");
+        });
+    } catch (e) {
+      loaderRef.current.style.display = "none";
+      formRef.current.style.display = "grid";
+      alert("Unable to update the data. Please try again later.");
+      console.log("Error found in updating: " + e);
     }
   };
 
@@ -124,7 +222,20 @@ const AddComponent = () => {
   return (
     <>
       <Header />
-      <form className="add-component">
+      <dotlottie-player
+        ref={loaderRef}
+        src="/loading_anim.json"
+        background="transparent"
+        speed="1"
+        style={{
+          width: "300px",
+          height: "300px",
+          margin: "auto",
+        }}
+        loop
+        autoplay
+      ></dotlottie-player>
+      <form className="add-component" ref={formRef}>
         <label>Component Name</label>
         <input
           name="name"
@@ -137,6 +248,7 @@ const AddComponent = () => {
         />
         <label>Component Type</label>
         <select
+          ref={componentTypeRef}
           onChange={(e) => {
             setComponentType(e.target.value);
           }}
@@ -148,9 +260,11 @@ const AddComponent = () => {
         </select>
         <label>Component Category</label>
         <select
+          ref={componentCategoryRef}
           onChange={(e) => {
             setComponentcategory(e.target.value);
-          }}>
+          }}
+        >
           <option selected hidden value="none">
             Select a category
           </option>
@@ -199,7 +313,7 @@ const AddComponent = () => {
             if (e.target.files.length > 0) {
               var reader = new FileReader();
               reader.onloadend = function () {
-                console.log('RESULT', reader.result)
+                console.log("RESULT", reader.result);
                 setDesignFile(reader.result);
               };
               reader.readAsDataURL(e.target.files[0]);
@@ -238,11 +352,13 @@ const AddComponent = () => {
             } else if (componentType == "design" && designFile == null) {
               alert("Please upload the design");
             } else {
-              addComponent();
+              {
+                componentID == null ? addComponent() : editComponent();
+              }
             }
           }}
         >
-          Save Component
+          {componentID == null ? "Save Component" : "Update Component"}
         </button>
       </form>
     </>
