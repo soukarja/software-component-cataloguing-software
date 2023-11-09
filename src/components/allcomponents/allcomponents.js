@@ -114,6 +114,7 @@ const AllComponents = () => {
         loop
         autoplay
       ></dotlottie-player>
+      <span className="title">All Components</span>
     <div className="all-components">
       {savedComponents.map((item) => {
         return (

@@ -1,9 +1,11 @@
 .searchbar {
-  width: 60%;
-  margin: 3rem auto;
-  background: #009a62;
-  border-radius: 8px;
-  padding: 1rem 3rem;
+  width: 100%;
+  /* margin: 3rem auto; */
+  /* background: #009a62; */
+  background: linear-gradient(180deg, #bfffe8,#25966e);
+  /* border-radius: 8px; */
+  padding: 1rem 13rem;
+  margin-bottom: 3rem;
 }
 
 .searchbar .col {

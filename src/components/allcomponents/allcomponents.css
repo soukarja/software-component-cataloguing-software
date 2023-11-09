@@ -1,7 +1,18 @@
 .all-components {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  margin-top: 1.3rem;
 }
+
+.title{
+  font-size: 2rem;
+  font-weight: bold;
+  margin: auto;
+  margin-top: 5rem;
+  margin-bottom: 4rem;
+  margin-left: 40%;
+}
+
 .card {
   border: solid 1px black;
   display: flex;
