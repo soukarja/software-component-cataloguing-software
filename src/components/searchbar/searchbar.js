@@ -1,26 +1,87 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./searchbar.css";
 
-const SearchBar = () => {
+const SearchBar = ({
+  savedComponents,
+  setSavedComponents,
+  filteredSavedComponents,
+  setFilteredSavedComponents,
+}) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [compType, setCompType] = useState("all");
+  const [compCat, setCompCat] = useState("all");
+
+  const runSearchFilter = () => {
+    let tempComponents = null;
+    if (searchQuery === "") tempComponents = savedComponents;
+    else
+      tempComponents = savedComponents.filter((item) => {
+        return (
+          item.componentName
+            .toLowerCase()
+            .includes(searchQuery.toLocaleLowerCase()) ||
+          item.programmingLanguage
+            .toLowerCase()
+            .includes(searchQuery.toLocaleLowerCase())
+        );
+      });
+
+    if (compCat != "all") {
+      tempComponents = tempComponents.filter((item) => {
+        return item.componentCategory === compCat;
+      });
+    }
+
+    if (compType != "all") {
+      tempComponents = tempComponents.filter((item) => {
+        return item.componentType === compType;
+      });
+    }
+
+    setFilteredSavedComponents(tempComponents);
+  };
+
+  useEffect(() => {
+    runSearchFilter();
+  }, [searchQuery, compCat, compType]);
+
   return (
     <>
       <form className="searchbar">
-        <input type="text" name="name" placeholder="Search Anything..." />
+        <input
+          type="text"
+          name="name"
+          placeholder="Search Anything..."
+          onChange={(e) => {
+            let query = e.target.value.trim();
+            setSearchQuery(query);
+          }}
+          value={searchQuery}
+        />
         <div className="row">
           <div className="col">
             <label>Component Type</label>
-            <select>
-              <option selected value="code">
-                Code
+            <select
+              onChange={(e) => {
+                setCompType(e.target.value);
+              }}
+            >
+              <option selected value="all">
+                All
               </option>
+              <option value="code">Code</option>
               <option value="design">Design</option>
             </select>
           </div>
           <div className="col">
             <label>Component Category</label>
-            <select>
-              <option selected hidden value="none">
-                Select a category
+            <select
+              onChange={(e) => {
+                setCompCat(e.target.value);
+              }}
+            >
+              <option selected value="all">
+                All
               </option>
               <option value="views">Views</option>
               <option value="model">Model</option>

@@ -4,7 +4,7 @@ import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { componentStorageName, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
-const AllComponents = () => {
+const AllComponents = ({savedComponents, setSavedComponents, filteredSavedComponents, setFilteredSavedComponents}) => {
   const loaderRef = useRef();
   const navigate = useNavigate();
 
@@ -88,11 +88,16 @@ const AllComponents = () => {
           return item.id != compID;
         })
       );
+      setFilteredSavedComponents(
+        filteredSavedComponents.filter((item) => {
+          return item.id != compID;
+        })
+      );
       alert("Deleted Successfully!");
     });
   };
 
-  const [savedComponents, setSavedComponents] = useState([]);
+  
   const fetchComponents = async () => {
     await getDocs(collection(db, componentStorageName)).then(
       (querySnapshot) => {
@@ -103,7 +108,8 @@ const AllComponents = () => {
         loaderRef.current.style.display = "none";
         loaderRef.current.nextElementSibling.style.display = "unset";
         setSavedComponents(newData);
-        console.log(newData);
+        setFilteredSavedComponents(newData);
+        // console.log(newData);
       }
     );
   };
@@ -129,11 +135,11 @@ const AllComponents = () => {
       ></dotlottie-player>
       <span className="all-components-title">
         {
-          savedComponents.length <= 0?"No Components Found": "All Components"
+          filteredSavedComponents.length <= 0?"No Components Found": "All Components"
         }
       </span>
       <div className="all-components">
-        {savedComponents.map((item) => {
+        {filteredSavedComponents.map((item) => {
           return (
             <Card
               name={item.componentName}
