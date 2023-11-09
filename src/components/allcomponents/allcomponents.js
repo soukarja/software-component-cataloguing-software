@@ -11,10 +11,13 @@ const AllComponents = () => {
   const Card = (props) => {
     return (
       <div className="card">
-        <span className="edit-btn" onClick={(e)=>{
-            e.preventDefault()
-            navigate("/edit-component/"+props.compID)
-        }}>
+        <span
+          className="edit-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/edit-component/" + props.compID);
+          }}
+        >
           <dotlottie-player
             src="/edit_ic.json"
             background="transparent"
@@ -24,20 +27,23 @@ const AllComponents = () => {
               height: "30px",
             }}
             loop={false}
-            onMouseOver={(e)=>{
-                e.target.play();
-                setTimeout(()=>{
-                    e.target.stop();
-                }, 2000);
+            onMouseOver={(e) => {
+              e.target.play();
+              setTimeout(() => {
+                e.target.stop();
+              }, 2000);
             }}
           ></dotlottie-player>
         </span>
-        <span className="del-btn" onClick={(e)=>{
-            e.preventDefault()
-            if (window.confirm("Do you want to delete this component?")){
-                deleteComponent(props.compID)
+        <span
+          className="del-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            if (window.confirm("Do you want to delete this component?")) {
+              deleteComponent(props.compID);
             }
-        }}>
+          }}
+        >
           <dotlottie-player
             src="/delete_ic.json"
             background="transparent"
@@ -47,22 +53,23 @@ const AllComponents = () => {
               height: "30px",
             }}
             loop={false}
-            onMouseOver={(e)=>{
-                e.target.play();
-                setTimeout(()=>{
-                    e.target.stop();
-                }, 2000);
+            onMouseOver={(e) => {
+              e.target.play();
+              setTimeout(() => {
+                e.target.stop();
+              }, 2000);
             }}
           ></dotlottie-player>
         </span>
         {props.type == "design" && <img src={props.designFile} />}
         <span className="name">{props.name}</span>
-        <span className="category">Category: {props.category}</span>
+        {/* <span className="category">Category: {props.category}</span> */}
         {props.type == "code" && (
           <span className="category">Language: {props.language}</span>
         )}
         <div className="pills">
           <span>{props.type}</span>
+          <span>{props.category}</span>
         </div>
       </div>
     );
@@ -70,15 +77,20 @@ const AllComponents = () => {
 
   useEffect(() => {
     loaderRef.current.style.display = "flex";
+    loaderRef.current.nextElementSibling.style.display = "none";
   }, []);
 
   const deleteComponent = async (compID) => {
     console.log(compID);
     await deleteDoc(doc(db, componentStorageName, compID)).then(() => {
-        setSavedComponents(savedComponents.filter((item)=>{return item.id != compID}))
-        alert("Deleted Successfully!");
-      })
-  }
+      setSavedComponents(
+        savedComponents.filter((item) => {
+          return item.id != compID;
+        })
+      );
+      alert("Deleted Successfully!");
+    });
+  };
 
   const [savedComponents, setSavedComponents] = useState([]);
   const fetchComponents = async () => {
@@ -89,6 +101,7 @@ const AllComponents = () => {
           id: doc.id,
         }));
         loaderRef.current.style.display = "none";
+        loaderRef.current.nextElementSibling.style.display = "unset";
         setSavedComponents(newData);
         console.log(newData);
       }
@@ -100,7 +113,7 @@ const AllComponents = () => {
   }, []);
   return (
     <>
-    <dotlottie-player
+      <dotlottie-player
         ref={loaderRef}
         src="/loading_anim.json"
         background="transparent"
@@ -109,27 +122,31 @@ const AllComponents = () => {
           width: "300px",
           height: "300px",
           margin: "auto",
-          display: "flex"
+          display: "flex",
         }}
         loop
         autoplay
       ></dotlottie-player>
-      <span className="title">All Components</span>
-    <div className="all-components">
-      {savedComponents.map((item) => {
-        return (
-          <Card
-            name={item.componentName}
-            category={item.componentCategory}
-            language={item.programmingLanguage}
-            type={item.componentType}
-            designFile={item.designData}
-            key={item.id}
-            compID={item.id}
-          />
-        );
-      })}
-    </div>
+      <span className="all-components-title">
+        {
+          savedComponents.length <= 0?"No Components Found": "All Components"
+        }
+      </span>
+      <div className="all-components">
+        {savedComponents.map((item) => {
+          return (
+            <Card
+              name={item.componentName}
+              category={item.componentCategory}
+              language={item.programmingLanguage}
+              type={item.componentType}
+              designFile={item.designData}
+              key={item.id}
+              compID={item.id}
+            />
+          );
+        })}
+      </div>
     </>
   );
 };
