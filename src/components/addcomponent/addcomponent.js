@@ -297,9 +297,9 @@ const AddComponent = () => {
           <option value="php">PHP</option>
           <option value="python">Python</option>
           <option value="xml">XML</option>
-          <option value="swift">Swift</option>
-          <option value="ruby">Ruby</option>
-          <option value="rust">Rust</option>
+          {/* <option value="swift">Swift</option> */}
+          {/* <option value="ruby">Ruby</option>
+          <option value="rust">Rust</option> */}
           <option value="json">JSON</option>
           <option value="others">Others</option>
         </select>
