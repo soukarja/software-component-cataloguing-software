@@ -242,7 +242,7 @@ const AddComponent = () => {
           placeholder="Enter a name for the component"
           value={componentName}
           onChange={(e) => {
-            setComponentName(e.target.value.trim());
+            setComponentName(e.target.value);
           }}
         />
         <label>Component Type</label>

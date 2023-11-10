@@ -18,6 +18,7 @@ const firebaseConfig = {
 };
 
 export const componentStorageName = "components";
+export const usersStorageName = "users";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

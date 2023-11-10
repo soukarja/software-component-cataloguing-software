@@ -15,6 +15,7 @@ root.render(
       <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/login" element={<LoginPage />}/>
+          <Route path="/register" element={<LoginPage isRegister={true} />}/>
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/add-component" element={<AddComponent />}/>
           <Route path="/edit-component/:componentID" element={<AddComponent />}/>

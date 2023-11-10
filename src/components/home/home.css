@@ -11,9 +11,10 @@
 .body .title{
     font-size: 3rem;
     font-weight: bold;
+    text-align: center;
 }
 
-.body a{
+.body .btn{
     margin-top: 5rem;
     text-decoration: none;
     background: rgb(131, 216, 255);
@@ -23,10 +24,24 @@
     color: purple;
 }
 
+.body .link{
+    margin-top: 1rem;
+    background: transparent;
+    cursor: pointer;
+    color: rgb(0, 35, 104);
+    font-size: 0.8rem;
+}
+
+.body .link:hover{
+    background: transparent;
+    color: rgb(30, 78, 174);;
+}
+
 .body .desc{
     font-size: 0.9rem;
     color: gray;
     text-align: center;
+    margin: 1rem 20rem;
     margin-top: 2rem;
 }
 

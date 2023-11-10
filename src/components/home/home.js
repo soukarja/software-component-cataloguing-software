@@ -14,11 +14,12 @@ const Home = () => {
           Cataloguing Software
         </span>
         <p className="desc">
-          The software component cataloguing software consists of <br />a
-          software components catalogue and various functions defined on this
-          components catalogue
+        The Software Component Cataloging Software addresses the challenge of efficiently managing and retrieving reusable software components. Built with features such as user authentication, hierarchical categorization, and real-time database updates using ReactJS and Firebase, it streamlines the cataloging process, enabling users to store, search, and reuse components with ease in diverse software development environments.
         </p>
-        <Link to="/login">Click Here to Login</Link>
+        <Link to="/login" className="btn">Click Here to Login</Link>
+        <Link to="/register" className="link">
+          New user? Register here
+      </Link>
       </div>
     </>
   );
