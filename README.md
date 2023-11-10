@@ -24,34 +24,36 @@ To run this project locally, follow these steps:
    ```
 
 2. Change into the project directory:
-```bash
-cd software-component-cataloguing-software
-```
+   ```bash
+   cd software-component-cataloguing-software
+   ```
 3. Install dependencies:
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 4. Configure Firebase:
 
 - Create a Firebase project on the Firebase Console.
 - Add your Firebase configuration in ```src/firebase.js```.
-```bash
-const firebaseConfig = {
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'your-project-id.firebaseapp.com',
-  databaseURL: 'https://your-project-id.firebaseio.com',
-  projectId: 'your-project-id',
-  storageBucket: 'your-project-id.appspot.com',
-  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-  appId: 'YOUR_APP_ID',
-};
-
-```
+  
+   ```bash
+   const firebaseConfig = {
+     apiKey: 'YOUR_API_KEY',
+     authDomain: 'your-project-id.firebaseapp.com',
+     databaseURL: 'https://your-project-id.firebaseio.com',
+     projectId: 'your-project-id',
+     storageBucket: 'your-project-id.appspot.com',
+     messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+     appId: 'YOUR_APP_ID',
+   };
+   
+   ```
 5. Start the development server:
-```bash
-npm start
-```
-6. Open your web browser and navigate to ```http://localhost:3000``` to view the application.
+   
+   ```bash
+   npm start
+   ```
+7. Open your web browser and navigate to ```http://localhost:3000``` to view the application.
 
 
 
@@ -61,14 +63,21 @@ npm start
 
 ## Project Structure
 The project is organized as follows:
-```bash
-software-component-catalog/
-  ├── public/
-  ├── src/
-  │    ├── components/
-  │    ├── containers/
-  │    ├── assets/
-  │    ├── ...
+   ```bash
+   software-component-cataloguing-software/
+     ├── public/
+     ├── src/
+     │    ├── components/
+     │             ├──────── addcomponent/
+     │             ├──────── allcomponents/
+     │             ├──────── dashboard/
+     │             ├──────── header/
+     │             ├──────── home/
+     │             ├──────── login/
+     │             ├──────── searchbar/
+     │    ├── firebase.js
+     │    ├── index.js
+     │    ├── ...
 
 ```
 
