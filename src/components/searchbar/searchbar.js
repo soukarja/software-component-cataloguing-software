@@ -19,10 +19,10 @@ const SearchBar = ({
         return (
           item.componentName
             .toLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
+            .includes(searchQuery.toLocaleLowerCase().trim()) ||
           item.programmingLanguage
             .toLowerCase()
-            .includes(searchQuery.toLocaleLowerCase())
+            .includes(searchQuery.toLocaleLowerCase().trim())
         );
       });
 
@@ -53,7 +53,7 @@ const SearchBar = ({
           name="name"
           placeholder="Search Anything..."
           onChange={(e) => {
-            let query = e.target.value.trim();
+            let query = e.target.value;
             setSearchQuery(query);
           }}
           value={searchQuery}
